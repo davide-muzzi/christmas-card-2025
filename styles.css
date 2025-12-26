@@ -3,11 +3,16 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+html,
 body {
   margin: 0;
-  min-height: 100vh;
+  padding: 0;
+  height: 100%;
+}
+
+body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  background: linear-gradient(180deg, #8b0000, #b22222, #0f5132);
+  background: linear-gradient(180deg, #7a0000 0%, #a51d1d 45%, #0f5132 100%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,27 +20,37 @@ body {
   overflow: hidden;
 }
 
+/* Snow canvas */
+#snow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
 /* Card */
 .card {
+  position: relative;
+  z-index: 2;
   width: 92%;
   max-width: 420px;
   padding: 28px;
   border-radius: 24px;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.18);
   backdrop-filter: blur(18px);
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
 }
 
-h1 {
-  margin-top: 0;
-  margin-bottom: 20px;
+.card h1 {
+  margin: 0 0 20px;
   text-align: center;
   font-size: 1.8rem;
 }
 
-p {
+.card p {
   line-height: 1.65;
   font-size: 1.05rem;
+  opacity: 0.95;
 }
 
 .highlight {
@@ -59,16 +74,4 @@ button {
 
 button:active {
   transform: scale(0.96);
-}
-
-/* Snow canvas */
-#snow {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.card {
-  z-index: 1;
 }

@@ -3,20 +3,22 @@ const ctx = canvas.getContext("2d");
 
 let snowing = true;
 let flakes = [];
+const DPR = window.devicePixelRatio || 1;
 
-function resize() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+function resizeCanvas() {
+  canvas.width = window.innerWidth * DPR;
+  canvas.height = window.innerHeight * DPR;
+  canvas.style.width = window.innerWidth + "px";
+  canvas.style.height = window.innerHeight + "px";
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
 }
-resize();
-window.addEventListener("resize", resize);
 
-function initSnow() {
+function createFlakes() {
   flakes = Array.from({ length: 120 }, () => ({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
+    x: Math.random() * window.innerWidth,
+    y: Math.random() * window.innerHeight,
     r: Math.random() * 2 + 1,
-    v: Math.random() * 0.8 + 0.4,
+    v: Math.random() * 1 + 0.6,
   }));
 }
 
@@ -24,16 +26,16 @@ function animateSnow() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   if (snowing) {
-    ctx.fillStyle = "rgba(255,255,255,0.9)";
-    flakes.forEach((f) => {
+    ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
+    flakes.forEach((flake) => {
       ctx.beginPath();
-      ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+      ctx.arc(flake.x, flake.y, flake.r, 0, Math.PI * 2);
       ctx.fill();
 
-      f.y += f.v;
-      if (f.y > canvas.height) {
-        f.y = -5;
-        f.x = Math.random() * canvas.width;
+      flake.y += flake.v;
+      if (flake.y > window.innerHeight) {
+        flake.y = -5;
+        flake.x = Math.random() * window.innerWidth;
       }
     });
   }
@@ -45,5 +47,8 @@ document.getElementById("snowToggle").addEventListener("click", () => {
   snowing = !snowing;
 });
 
-initSnow();
+resizeCanvas();
+createFlakes();
 animateSnow();
+
+window.addEventListener("resize", resizeCanvas);
