@@ -1,7 +1,7 @@
 const canvas = document.getElementById("snow");
 const ctx = canvas.getContext("2d");
 
-let snowing = true;
+let snowing = false;
 let flakes = [];
 const DPR = window.devicePixelRatio || 1;
 
